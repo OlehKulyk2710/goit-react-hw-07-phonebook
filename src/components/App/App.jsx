@@ -6,19 +6,22 @@ import ContactForm from 'components/ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
 import { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
+import { useGetContactsQuery } from 'redux/contactsSlice';
 
 const App = () => {
-  const contacts = useSelector(state => state.contacts.items);
+  const { data, error, isLoading, isError } = useGetContactsQuery();
+
+  console.log(data);
 
   return (
     <>
       <div className={css.container}>
         <h1 className={css.title__phonebook}>Phonebook</h1>
-        <ContactForm />
+        {data && <ContactForm contacts={data} />}
 
         <h2 className={css.title__contacts}>Contacts</h2>
         <Filter />
-        {contacts.length !== 0 && <ContactList />}
+        {data && <ContactList contacts={data} />}
       </div>
       <Toaster position="top-left" />
     </>

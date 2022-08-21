@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateContacts } from 'redux/itemsSlice';
+import { useDispatch } from 'react-redux';
+// import { updateContacts } from 'redux/itemsSlice';
+import { useCreateContactMutation } from 'redux/contactsSlice';
 import shortid from 'shortid';
 import css from './ContactForm.module.css';
 import toast from 'react-hot-toast';
@@ -8,11 +9,11 @@ import toast from 'react-hot-toast';
 const NAME = 'name';
 const NUMBER = 'number';
 
-const ContactForm = () => {
+const ContactForm = ({ contacts }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const [createContact] = useCreateContactMutation();
 
-  const contacts = useSelector(state => state.contacts.items);
   const dispatch = useDispatch();
 
   const handleChange = event => {
@@ -48,10 +49,13 @@ const ContactForm = () => {
       return;
     }
 
-    const contactData = { id: shortid.generate(), name, number };
-    dispatch(updateContacts(contactData));
+    const contactData = { id: shortid.generate(), name, phone: number };
+    createContact(contactData);
+    // dispatch(updateContacts(contactData));
     setName('');
     setNumber('');
+
+    console.log(contactData);
   };
 
   return (

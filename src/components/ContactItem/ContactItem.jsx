@@ -1,13 +1,16 @@
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/itemsSlice';
+// import { deleteContact } from 'redux/itemsSlice';
+import { useDeleteContactMutation } from 'redux/contactsSlice';
 import css from './ContactItem.module.css';
 import PropTypes from 'prop-types';
 
 const ContactItem = ({ id, name, number }) => {
   const dispatch = useDispatch();
+  const [deleteContact] = useDeleteContactMutation();
 
   const handleClick = () => {
-    dispatch(deleteContact(id));
+    // dispatch(deleteContact(id));
+    deleteContact(id);
   };
   return (
     <li className={css.contacts__item}>
