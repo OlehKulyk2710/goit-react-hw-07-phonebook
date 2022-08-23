@@ -47,3 +47,7 @@
 .btn__submit:active {
   background-color: rgba(7, 109, 192, 0.9);
 }
+
+.btn__submit:disabled {
+  background-color: gray;
+}

@@ -5,13 +5,10 @@ import ContactList from 'components/ContactList/ContactList';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
 import { Toaster } from 'react-hot-toast';
-import { useSelector } from 'react-redux';
-import { useGetContactsQuery } from 'redux/contactsSlice';
+import { useGetContactsQuery } from 'redux/contactsApi';
 
 const App = () => {
-  const { data, error, isLoading, isError } = useGetContactsQuery();
-
-  console.log(data);
+  const { data } = useGetContactsQuery();
 
   return (
     <>

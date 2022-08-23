@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-// import { updateContacts } from 'redux/itemsSlice';
-import { useCreateContactMutation } from 'redux/contactsSlice';
+import { useCreateContactMutation } from 'redux/contactsApi';
+import { PropTypes } from 'prop-types';
 import shortid from 'shortid';
 import css from './ContactForm.module.css';
 import toast from 'react-hot-toast';
@@ -12,9 +11,7 @@ const NUMBER = 'number';
 const ContactForm = ({ contacts }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const [createContact] = useCreateContactMutation();
-
-  const dispatch = useDispatch();
+  const [createContact, { isLoading }] = useCreateContactMutation();
 
   const handleChange = event => {
     const inputName = event.currentTarget.name;
@@ -51,11 +48,8 @@ const ContactForm = ({ contacts }) => {
 
     const contactData = { id: shortid.generate(), name, phone: number };
     createContact(contactData);
-    // dispatch(updateContacts(contactData));
     setName('');
     setNumber('');
-
-    console.log(contactData);
   };
 
   return (
@@ -86,7 +80,7 @@ const ContactForm = ({ contacts }) => {
           onChange={handleChange}
         />
       </label>
-      <button type="submit" className={css.btn__submit}>
+      <button type="submit" className={css.btn__submit} disabled={isLoading}>
         Add contact
       </button>
     </form>
@@ -94,3 +88,7 @@ const ContactForm = ({ contacts }) => {
 };
 
 export default ContactForm;
+
+ContactForm.propTypes = {
+  contacts: PropTypes.array.isRequired,
+};

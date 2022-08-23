@@ -20,3 +20,7 @@
 .contacts__btn:active {
   background-color: rgba(7, 109, 192, 0.9);
 }
+
+.contacts__btn:disabled {
+  background-color: grey;
+}
